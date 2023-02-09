@@ -13,17 +13,37 @@ class BaseModel:
     created_at = datetime.now()
     updated_at = datetime.now()
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initializes class BaseModel
+        args:
+            args - not used
+            kwargs - arguments for the constructor of a
+                        BaseModel
         attributes:
             created_at - time an instance is created
             upddated_at - time an instance is updated
             id - universal unique identifier for
-                each instance created
+                    each instance created
         """
-        self.created_at = BaseModel.created_at
-        self.id = BaseModel.id
-        self.updated_at = BaseModel.updated_at
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == 'created_at' and key == 'updated_at':
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != '__class__':
+                    setattr(self, key, value)
+                if 'created_at' not in kwargs:
+                    self.created_at = BaseModel.created_at
+                if 'id' not in kwargs:
+                    self.id = BaseModel.id
+
+                if 'created_at' in kwargs and 'updated_at' not in kwargs:
+                    self.updated_at = BaseModel.created_at
+                else:
+                    self.updated_at = BaseModel.updated_at
+        else:
+            self.id = BaseModel.id
+            self.created_at = BaseModel.created_at
+            self.updated_at = BaseModel.updated_at
 
     def __str__(self):
         """Returns a string of class name, id, and dictionary
