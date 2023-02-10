@@ -5,6 +5,11 @@ from datetime import datetime
 from shlex import split
 from models.base_model import BaseModel
 from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from models import storage
 
 
@@ -22,7 +27,9 @@ class HBNBCommand(cmd.Cmd):
             Displays output to the use based on
             the input commands.
         """
-        classes = ["BaseModel", "User"]
+        classes = [
+                "BaseModel", "User", "Place", "State",
+                "City", "Amenity", "Review"]
 
         msg = ["** class name missing **",
                "** class doesn't exist **",
