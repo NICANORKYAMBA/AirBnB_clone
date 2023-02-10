@@ -9,11 +9,6 @@ class BaseModel:
     """Defines all common attributes/methods
     for other classes
     """
-
-    id = str(uuid.uuid4())
-    created_at = datetime.now()
-    updated_at = datetime.now()
-
     def __init__(self, *args, **kwargs):
         """Initializes class BaseModel
         args:
@@ -26,31 +21,21 @@ class BaseModel:
             id - universal unique identifier for
                     each instance created
         """
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
-                    setattr(self, key, value)
-                if 'id' not in kwargs:
-                    self.id = str(uuid.uuid4())
-                if 'created_at' not in kwargs:
-                    self.created_at = datetime.now()
-
-                if 'created_at' in kwargs and 'updated_at' not in kwargs:
-                    self.updated_at = self.created_at
-                else:
-                    self.updated_at = datetime.now()
-        else:
+        tformat = '%Y-%m-%dT%H:%M:%S.%f'
+        if not kwargs:
             self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
             models.storage.new(self)
-
-    def __str__(self):
-        """Returns a string of class name, id, and dictionary
-        """
-        return "[{}] ({}) {}".format(
-                type(self).__name__, self.id, self.__dict__)
+        else:
+            for key, value in kwargs.items():
+                if key in ("updated_at", "created_at"):
+                    self.__dict__[key] = datetime.strptime(
+                        value, tformat)
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
+                else:
+                    self.__dict__[key] = value
 
     def save(self):
         """Updates the public instance attribute
@@ -70,3 +55,8 @@ class BaseModel:
         my_dict["updated_at"] = self.updated_at.isoformat()
 
         return my_dict
+
+    def __str__(self):
+        """Returns a string of class name, id, and dictionary"""
+        return "[{}] ({}) {}".format(
+                type(self).__name__, self.id, self.__dict__)
