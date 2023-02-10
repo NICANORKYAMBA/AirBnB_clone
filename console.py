@@ -4,6 +4,7 @@ import cmd
 from datetime import datetime
 from shlex import split
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -21,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
             Displays output to the use based on
             the input commands.
         """
-        classes = ["BaseModel"]
+        classes = ["BaseModel", "User"]
 
         msg = ["** class name missing **",
                "** class doesn't exist **",
@@ -154,14 +155,14 @@ class HBNBCommand(cmd.Cmd):
             return
         args = line.split()
         my_dict = storage.all()
-        
+
         for i in range(len(args[1:]) + 1):
             if args[i][0] == '"':
                 args[i] = args[i].replace('"', "")
         key = args[0] + '.' + args[1]
         attr_key = args[2]
         attr_value = args[3]
-        
+
         try:
             if attr_value.isdigit():
                 attr_value = int(attr_value)
@@ -170,7 +171,7 @@ class HBNBCommand(cmd.Cmd):
         except ValueError:
             pass
         class_attr = type(my_dict[key]).__dict__
-        
+
         if attr_key in class_attr.keys():
             try:
                 attr_value = type(class_attr[attr_key])(attr_value)
