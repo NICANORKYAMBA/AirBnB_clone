@@ -29,7 +29,7 @@ class FileStorage:
         """Sets in '__objects' the obj with key
         '<obj class name>.id'"""
         if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -51,8 +51,4 @@ class FileStorage:
                     value = eval(value['__class__'])(**value)
                     self.__objects[key] = value
         except FileNotFoundError:
-            return
-
-    def close(self):
-        """Call reload method"""
-        self.reload()
+            pass
