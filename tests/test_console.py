@@ -43,10 +43,10 @@ class TestHBNBCommand_help(unittest.TestCase):
             self.assertEqual(h, output.getvalue().strip())
 
     def test_help_create(self):
-        h = ("Creates a new instance of BaseModel.\n        " 
+        h = ("Creates a new instance of BaseModel.\n        "
              "Exceptions:\n            "
              "SyntaxError: when there is no args given\n            "
-             "NameError: when there is no object that has the name")
+             "NameError: when no object with that name")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help create"))
             self.assertEqual(h, output.getvalue().strip())
@@ -61,7 +61,7 @@ class TestHBNBCommand_help(unittest.TestCase):
         h = ("Prints the string representation of an instance\n        "
              "Exceptions:\n            "
              "SyntaxError: when there is no args given\n            "
-             "NameError: when there is no object that has the name\n            "
+             "NameError: when no object with that name\n            "
              "IndexError: when there is no id given\n            "
              "KeyError: when there is no valid id given")
         with patch("sys.stdout", new=StringIO()) as output:
@@ -72,7 +72,7 @@ class TestHBNBCommand_help(unittest.TestCase):
         h = ("Deletes an instance based on the class name and id\n        "
              "Exceptions:\n            "
              "SyntaxError: when there is no args given\n            "
-             "NameError: when there is no object that has the name\n            "
+             "NameError: when no object with that name\n            "
              "IndexError: when there is no id given\n            "
              "KeyError: when there is no valid id given")
         with patch("sys.stdout", new=StringIO()) as output:
@@ -81,8 +81,8 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_all(self):
         h = ("Prints all string representation of all instances\n        "
-             "Exceptions:\n            " 
-             "NameError: when there is no object that has the name")
+             "Exceptions:\n            "
+             "NameError: when no object with that name")
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help all"))
             self.assertEqual(h, output.getvalue().strip())
@@ -95,9 +95,9 @@ class TestHBNBCommand_help(unittest.TestCase):
 
     def test_help_update(self):
         h = ("Updates an instance by adding or updating attribute\n        "
-             "Exceptions:\n            "             
+             "Exceptions:\n            "
              "SyntaxError: when there is no args given\n            "
-             "NameError: when there is no object that has the name\n            "
+             "NameError: when no object with that name\n            "
              "IndexError: when there is no id given\n            "
              "KeyError: when there is no valid id given\n            "
              "AttributeError: when there is no attribute given\n            "
