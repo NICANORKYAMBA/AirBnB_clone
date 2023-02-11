@@ -75,10 +75,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel.
-
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
         """
         argl = parse(arg)
         if len(argl) == 0:
@@ -93,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of an instance
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
             IndexError: when there is no id given
             KeyError: when there is no valid id given
         """
@@ -114,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         """Deletes an instance based on the class name and id
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
             IndexError: when there is no id given
             KeyError: when there is no valid id given
         """
@@ -135,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """Prints all string representation of all instances
         Exceptions:
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
         """
         argl = parse(arg)
         if len(argl) > 0 and argl[0] not in HBNBCommand.all_classes:
@@ -159,10 +158,10 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def do_update(self, arg):
-        """Updates an instanceby adding or updating attribute
+        """Updates an instance by adding or updating attribute
         Exceptions:
             SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
+            NameError: when there is no object that has the name
             IndexError: when there is no id given
             KeyError: when there is no valid id given
             AttributeError: when there is no attribute given
